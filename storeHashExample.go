@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/tendermint/go-amino"
-	"github.com/tendermint/tendermint/crypto/merkle"
 	"github.com/tendermint/tendermint/crypto/tmhash"
 )
 
@@ -82,20 +81,11 @@ func hashHeader(items [][]byte) []byte {
 }
 
 func storeHash() {
-	// op1 := merkle.ProofOp{
-	// 	Type: "iavl:v",
-	// 	Key:  base64ToBytes("AQAAAAAAAAAB"),
-	// 	Data: base64ToBytes("twIKtAIKKQgOEDwYkE4qIAqVHc4yEL3Lr0lZ0cQPJ+nMt/TaT+H5Cd/pZOcdWmWZCikIDBAdGJBOKiAOo7imPYU0LXqSghAX34+evA8tHUnu6SI3mWqUAS5rcAopCAgQDBiQTiIgLcT4yW/qM8aqxuhaw+Zv55iofahwEGUGcAmeyzas1AIKKQgGEAgY8ikqIIQMVU13Mxhj2pnxGywAfwoRaRX7qIeWcSAqI/ot7OwsCikIBBAEGIoiKiCe4B7tdcsF0tG2W+f+nMvQdzjOsQkIvqNxbNHXfpL69gopCAIQAhiNDSog/tzkcYxC546anyOplbnELEARIvc8NNk990HEd3X4dZ0aMAoJAQAAAAAAAAABEiBF01aMSserjw6ZditfkKaR1q0SHsDI0mptE2Nzxud0RBioAQ=="),
-	// }
-
-	op2 := merkle.ProofOp{
-		Type: "multistore",
-		Key:  base64ToBytes("b3JhY2xl"),
-		Data: base64ToBytes("CoMFCi4KA2FjYxInCiUIkE4SIFLcE1ahhs4cq3V5OdCkp37QgcR2DLAHJEghUt8kOtfACjEKBm9yYWNsZRInCiUIkE4SIIwuNVuWpFTGVuBnZyWiXX2CcBQkjH7E/J5WRio+K+VOCjcKDGRpc3RyaWJ1dGlvbhInCiUIkE4SIBbWxbUhOXsbPBHbCmCv1/xo5hiGWtPIg9sLWHvt1ObrChAKB3VwZ3JhZGUSBQoDCJBOCi8KBG1haW4SJwolCJBOEiAjmXfb2YDKqg/X5EeV386YpNoE9Zr01JqJ9noPdoLJuwouCgNnb3YSJwolCJBOEiBgzRN8GWLsrGFjidaANIM/KSFQnC0oWqX1FTmXzpaKdAoyCgdzdGFraW5nEicKJQiQThIg6saY1G4hHFlWdh6pVvA+b2Z595TYExXNNsIlS2GDPfwKMQoGc3VwcGx5EicKJQiQThIgMCYYZhE3gW2M7aEMSGPNy3J+Nt83WGOZ3zf5Btxyu1YKMQoGcGFyYW1zEicKJQiQThIgxt7VueGVn9BcqHC3ZsEOS4QJLJeNAlH2LXrd6aNh6ssKEQoIZXZpZGVuY2USBQoDCJBOCi8KBG1pbnQSJwolCJBOEiCjAPoTDCcCcs1ElKEZ9a0vncO6GhGFErVmiyFNkl0VDwouCgNpYmMSJwolCJBOEiDYV07lM+os9Q9vR4MrLPvm/wXy0piJsZSTW/3b3Wj/TAozCghzbGFzaGluZxInCiUIkE4SIGMT9FctkDNMV3jsmW5EjiZEFSorUx394uVp4oYa8cm3Ci8KBGJhbmsSJwolCJBOEiD6OUYBrOLarjGKi+0ARmHBpOrcyNKlABOoi1XH+Q4DkA=="),
-	}
-
 	var opr2 MultiStoreProofOp
-	_ = (amino.NewCodec()).UnmarshalBinaryBare(op2.Data, &opr2)
+	_ = (amino.NewCodec()).UnmarshalBinaryBare(
+		base64ToBytes("CoMFCi4KA2FjYxInCiUIkE4SIFLcE1ahhs4cq3V5OdCkp37QgcR2DLAHJEghUt8kOtfACjEKBm9yYWNsZRInCiUIkE4SIIwuNVuWpFTGVuBnZyWiXX2CcBQkjH7E/J5WRio+K+VOCjcKDGRpc3RyaWJ1dGlvbhInCiUIkE4SIBbWxbUhOXsbPBHbCmCv1/xo5hiGWtPIg9sLWHvt1ObrChAKB3VwZ3JhZGUSBQoDCJBOCi8KBG1haW4SJwolCJBOEiAjmXfb2YDKqg/X5EeV386YpNoE9Zr01JqJ9noPdoLJuwouCgNnb3YSJwolCJBOEiBgzRN8GWLsrGFjidaANIM/KSFQnC0oWqX1FTmXzpaKdAoyCgdzdGFraW5nEicKJQiQThIg6saY1G4hHFlWdh6pVvA+b2Z595TYExXNNsIlS2GDPfwKMQoGc3VwcGx5EicKJQiQThIgMCYYZhE3gW2M7aEMSGPNy3J+Nt83WGOZ3zf5Btxyu1YKMQoGcGFyYW1zEicKJQiQThIgxt7VueGVn9BcqHC3ZsEOS4QJLJeNAlH2LXrd6aNh6ssKEQoIZXZpZGVuY2USBQoDCJBOCi8KBG1pbnQSJwolCJBOEiCjAPoTDCcCcs1ElKEZ9a0vncO6GhGFErVmiyFNkl0VDwouCgNpYmMSJwolCJBOEiDYV07lM+os9Q9vR4MrLPvm/wXy0piJsZSTW/3b3Wj/TAozCghzbGFzaGluZxInCiUIkE4SIGMT9FctkDNMV3jsmW5EjiZEFSorUx394uVp4oYa8cm3Ci8KBGJhbmsSJwolCJBOEiD6OUYBrOLarjGKi+0ARmHBpOrcyNKlABOoi1XH+Q4DkA=="),
+		&opr2,
+	)
 
 	msp := opr2.Proof
 	m := make(map[string][]byte, len(msp.StoreInfos))
