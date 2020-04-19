@@ -67,7 +67,7 @@ type RPCResponse struct {
 	Result  Result `json:"result"`
 }
 
-func main_() {
+func RPCGetCommit() {
 	resp, err := grequests.Get("http://d3n-debug.bandprotocol.com:26657/commit?height=10000", &grequests.RequestOptions{
 		Headers: map[string]string{
 			"Content-Type": "application/json",
