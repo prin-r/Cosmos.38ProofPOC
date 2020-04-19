@@ -7,7 +7,7 @@ import (
 	"github.com/tendermint/tendermint/version"
 )
 
-func MyTest1() {
+func BlockHash() {
 	tmHeader := tmtypes.Header{
 		Version: version.Consensus{Block: 10, App: 0},
 		ChainID: "bandchain",
@@ -54,8 +54,4 @@ func MyTest1() {
 
 	fmt.Println(s)
 	fmt.Println(fmt.Sprintf("%x ¢¢¢¢£££", HashHeader(elems)))
-}
-
-func main__() {
-	MyTest1()
 }
